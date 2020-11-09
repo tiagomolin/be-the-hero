@@ -1,10 +1,29 @@
 const connection = require("../database/connection");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+
+const insertSchema = Joi.object().keys({
+  name: Joi.string()
+    .regex(/^[A-Z]+ [A-Z]+$/i)
+    .max(60)
+    .required(),
+  email: Joi.string().email().max(100).required(),
+  password: Joi.string().max(100).required(),
+  phone: Joi.string().max(100).required(),
+  city: Joi.string().max(100).required(),
+  country: Joi.string().max(100).required(),
+});
 
 module.exports = {
   async insert(req, res) {
     const { name, email, password, phone, city, country } = req.body;
+
+    const result = insertSchema.validate(req.body);
+
+    if (result.error) {
+      return res.status(400).send(result.error.details[0].message);
+    }
 
     const [existsEmail] = await connection("users").where("email", email);
 

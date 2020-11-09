@@ -30,6 +30,9 @@ routes.post("/incident", verifyToken, incidentController.insert);
 //GET INCIDENTS
 routes.get("/incidents", incidentController.list);
 
+//GET INCIDENTS
+routes.get("/profile", verifyToken, incidentController.userList);
+
 //DELETE INCIDENT
 routes.delete("/deleteincident", verifyToken, incidentController.delete);
 

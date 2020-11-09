@@ -1,0 +1,98 @@
+.profile-container {
+  width: 100%;
+  max-width: 1180px;
+  padding: 0 30px;
+  margin: 32px auto;
+}
+
+.profile-container header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-container header h1 {
+  font-size: 32px;
+  margin-left: 24px;
+  font: 64px "Open Sans Condensed";
+  font-style: italic;
+  font-weight: bold;
+}
+
+.profile-container header img {
+  height: 64px;
+}
+
+.profile-container header a {
+  width: 200px;
+  margin-left: auto;
+  margin-top: 0;
+}
+
+.profile-container header button {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.274);
+  background: transparent;
+  margin-left: 16px;
+  border-radius: 50%;
+  transition: border-color 0.2s;
+}
+
+.profile-container header button:hover {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.profile-container section h1 {
+  margin-top: 80px;
+  margin-bottom: 32px;
+}
+
+.profile-container section ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 24px;
+  list-style: none;
+}
+
+.profile-container section ul li {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.profile-container section ul li button {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  border: 0;
+  background: none;
+  opacity: 0.4;
+  transition: border-color 0.2s;
+}
+
+.profile-container section ul li button:hover {
+  opacity: 1;
+}
+
+.profile-container section ul li strong {
+  position: absolute;
+  align-items: flex-end;
+
+  margin-left: auto;
+  right: 24px;
+  bottom: 0px;
+  margin-bottom: 16px;
+  color: rgb(59, 59, 59);
+  font: 50px "Open Sans Condensed", sans-serif;
+}
+
+.profile-container section ul li h1 {
+  margin-top: 8px;
+  font: 50px "Open Sans Condensed", sans-serif;
+}
+
+.value-group {
+  margin-top: 50px;
+}

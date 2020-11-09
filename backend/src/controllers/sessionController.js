@@ -16,7 +16,10 @@ module.exports = {
       return res.status(400).send("USER/PASSWORD not found.");
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign(
+      { id: user.id, name: user.name },
+      process.env.TOKEN_SECRET
+    );
 
     res.header("auth-token", token);
     return res.status(200).send("Login ok.");

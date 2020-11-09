@@ -1,8 +1,22 @@
 const connection = require("../database/connection");
+const Joi = require("joi");
+
+const insertSchema = Joi.object().keys({
+  title: Joi.string().max(60).required(),
+  description: Joi.string().max(100).required(),
+  value: Joi.number().required(),
+  website: Joi.string().max(100).allow(null, ""),
+});
 
 module.exports = {
   async insert(req, res) {
     const { title, description, value, website } = req.body;
+
+    const result = insertSchema.validate(req.body);
+
+    if (result.error) {
+      return res.status(400).send(result.error.details[0].message);
+    }
 
     const userId = req.user.id;
 
@@ -49,6 +63,31 @@ module.exports = {
 
     res.header("X-Total-Count", count["count(*)"]);
     return res.json(incidents);
+  },
+  async userList(req, res) {
+    const { page = 1, numRecordsPerPage = 5 } = req.query;
+    console.log(req);
+    const userId = req.user.id;
+    const [count] = await connection("incidents")
+      .where(function () {
+        if (userId) {
+          this.where("user_id", userId);
+        }
+      })
+      .count();
+
+    var user = await connection("users")
+      .where("id", userId)
+      .first()
+      .select(["id", "name", "email", "phone", "city", "country", "verified"]);
+    var incidents = await connection("incidents")
+      .where("user_id", userId)
+      .limit(numRecordsPerPage)
+      .offset((page - 1) * numRecordsPerPage);
+    res.header("X-Total-Count", count["count(*)"]);
+
+    var obj = Object.assign(user, { incidents: incidents });
+    return res.json(obj);
   },
   async delete(req, res) {
     const { incidentId } = req.query;
